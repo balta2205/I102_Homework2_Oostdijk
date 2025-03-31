@@ -19,7 +19,7 @@ int main(){
     switch(n){
         case 1:
             do{
-                std::cout << "Ingrese horas: ";
+                std::cout << "Ingrese horas (entre 1 y 12): ";
                 std::cin >> h;
                 t1.setHora(h);
             }while(h > 12 || h < 1);
@@ -27,13 +27,13 @@ int main(){
             
         case 2:
             do{
-                std::cout << "Ingrese horas: ";
+                std::cout << "Ingrese horas (entre 1 y 12): ";
                 std::cin >> h;
                 t1.setHora(h);
             }while(h > 12 || h < 1);
 
             do{
-                std::cout << "Ingrese minutos: ";
+                std::cout << "Ingrese minutos (entre 0 y 59): ";
                 std::cin >> m;
                 t1.setMinuto(m);
             }while(m > 59 || m < 0);
@@ -41,19 +41,19 @@ int main(){
         
         case 3:
             do{
-                std::cout << "Ingrese horas: ";
+                std::cout << "Ingrese horas (entre 1 y 12): ";
                 std::cin >> h;
                 t1.setHora(h);
             }while(h > 12 || h < 1);
 
             do{
-                std::cout << "Ingrese minutos: ";
+                std::cout << "Ingrese minutos (entre 0 y 59): ";
                 std::cin >> m;
                 t1.setMinuto(m);
             }while(m > 59 || m < 0);
 
             do{
-                std::cout << "Ingrese segundos: ";
+                std::cout << "Ingrese segundos (entre 0 y 59): ";
                 std::cin >> s;
                 t1.setSegundo(s);
             }while(s > 59 || s < 0);
@@ -61,19 +61,19 @@ int main(){
 
         case 4: 
             do{
-                std::cout << "Ingrese horas: ";
+                std::cout << "Ingrese horas (entre 1 y 12): ";
                 std::cin >> h;
                 t1.setHora(h);
             }while(h > 12 || h < 1);
 
             do{
-                std::cout << "Ingrese minutos: ";
+                std::cout << "Ingrese minutos (entre 0 y 59): ";
                 std::cin >> m;
                 t1.setMinuto(m);
             }while(m > 59 || m < 0);
 
             do{
-                std::cout << "Ingrese segundos: ";
+                std::cout << "Ingrese segundos (entre 0 y 59): ";
                 std::cin >> s;
                 t1.setSegundo(s);
             }while(s > 59 || s < 0);
@@ -205,7 +205,7 @@ void cambioDeFormato(Tiempo &t1){
         if (t1.getPeriodo() == "p.m." && t1.getHora() != 12) {
             std::cout << "La hora es: " << t1.getHora() + 12 << "hs, " << t1.getMinuto() << "m, " << t1.getSegundo() << "s" << std::endl;
         }
-        else if (t1.getPeriodo() == "p.m." && t1.getHora() == 12) {
+        else if (t1.getPeriodo() == "a.m." && t1.getHora() == 12) {
             std::cout << "La hora es: " << 0 << "hs, " << t1.getMinuto() << "m, " << t1.getSegundo() << "s" << std::endl;
         }
         else {
