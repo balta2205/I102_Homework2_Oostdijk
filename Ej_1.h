@@ -4,8 +4,6 @@
 #include <iostream>
 #include <iomanip>
 
-
-
 class Tiempo {
 private:
     int horas;
@@ -35,5 +33,9 @@ public:
 
     void mostrar() const;
 };
+
+void interfazAcciones(Tiempo &t1);
+void modificarTiempo(Tiempo &t1);
+void cambioDeFormato(Tiempo &t1);
 
 #endif
