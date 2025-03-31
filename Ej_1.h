@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 
+
+
 class Tiempo {
 private:
     int horas;
@@ -30,6 +32,8 @@ public:
     int getMinuto() const;
     int getSegundo() const;
     std::string getPeriodo() const;
+
+    void mostrar() const;
 };
 
 #endif

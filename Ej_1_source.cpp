@@ -2,7 +2,7 @@
 
 // Constructores.
 
-Tiempo::Tiempo() : horas(0), minutos(0), segundos(0) {} // Constructor por defecto.
+Tiempo::Tiempo() : horas(0), minutos(0), segundos(0), periodo("a.m.") {} // Constructor por defecto.
 
 Tiempo::Tiempo(int h){ // Constructor con un parámetro horas.
     setHora(h);
@@ -60,3 +60,13 @@ int Tiempo::getHora() const { return horas; }
 int Tiempo::getMinuto() const { return minutos; }
 int Tiempo::getSegundo() const { return segundos; }
 std::string Tiempo::getPeriodo() const { return periodo; }
+
+// Método para mostrar el tiempo.
+
+void Tiempo::mostrar() const {
+
+    std::cout << std::setfill('0') << std::setw(2) << horas << "hs, "
+              << std::setfill('0') << std::setw(2) << minutos << "m, "
+              << std::setfill('0') << std::setw(2) << segundos << "s "
+              << periodo << std::endl;
+}
