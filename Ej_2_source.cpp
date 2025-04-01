@@ -73,7 +73,7 @@ void Curso::inscribirEstudiante(std::unique_ptr<Estudiante> estudiante){
         return; 
     }
 
-    lista_estudiantes.push_back(estudiante);
+    lista_estudiantes.push_back(std::move(estudiante));
     return;
 }
 
@@ -87,7 +87,6 @@ void Curso::desinscribirEstudiante(int legajo){
 
     for(int i = 0; i < lista_estudiantes.size(); i++){ 
         if(lista_estudiantes[i] -> getLegajo() == legajo){ 
-            lista_estudiantes[i] -> eliminarCursoNota(nombre);
             lista_estudiantes.erase(lista_estudiantes.begin() + i); 
             return; 
         } 
@@ -97,7 +96,7 @@ void Curso::desinscribirEstudiante(int legajo){
 
 // Metodo para saber si un estudiante esta inscripto o no. -> Inciso b) -> ii)
 bool Curso::buscarEstudiante(int legajo){
-    for (int i; i < lista_estudiantes.size(); i++) if(lista_estudiantes[i] -> getLegajo() == legajo) return true; 
+    for (int i = 0; i < lista_estudiantes.size(); i++) if(lista_estudiantes[i] -> getLegajo() == legajo) return true; 
     return false;
 }
 
