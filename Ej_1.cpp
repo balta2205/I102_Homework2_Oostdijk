@@ -209,8 +209,9 @@ void modificarTiempo(Tiempo &t1){
 void cambioDeFormato(Tiempo &t1){
 
     std::cout << "Queres la hora en formato 12hs o 24hs? [1]12hs, [2]24hs" << std::endl;
+    int l; 
     do{
-        int l; std::cin >> l;
+        std::cin >> l;
 
         if (l == 1){ // Formato 12hs.
             std::cout << "La hora es: ";

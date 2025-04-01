@@ -19,6 +19,9 @@ public:
     Tiempo(int h, int m, int s);
     Tiempo(int h, int m, int s, std::string p);
 
+    // Destructor
+    ~Tiempo() = default;
+
     // Métodos setters (validan antes de asignar)
     void setHora(int h);
     void setMinuto(int m);
