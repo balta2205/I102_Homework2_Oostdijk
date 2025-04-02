@@ -1,20 +1,5 @@
 #include "Ej_2.h"
 
-/*
-
-iv. Imprimir la lista de estudiantes en orden alfabético. Para ello, utilice el
-algoritmo std::sort() en <algorithm>, el cual requerirá sobreescribir el
-operador “<”, y sobreescriba el operador “<<” (del método y clase que
-correspondan) para presentar los datos por pantalla.
-
-v. Dado que algunos cursos comparten la mayor parte de los estudiantes, se
-desea poder hacer una copia del objeto curso. Justifique su respuesta con
-un comentario en el código (esta puede llevar varias líneas), indicando de
-que tipo de copia se trata y como la hizo.
-
-c. ¿Qué tipo de relación existe entre los objetos curso y estudiante?
-d.*/
-
 // Clase Estudiante
 
 // Constructor.
@@ -28,16 +13,16 @@ int Estudiante::getLegajo() const {return legajo;} // Devuelve el legajo
 double Estudiante::getPromedio() const { // Devuelve el promedio de las notas 
     if(cursosNotas.empty()) return 0.0;
     double promedio = 0.0;
-    for(int i = 0; i < cursosNotas.size(); i++) promedio += cursosNotas[i].second;
+    for(const auto& pareja : cursosNotas) promedio += pareja.second;
 
     return promedio / cursosNotas.size();
 }
 
 // Metodo para agregar un curso y su nota.
 void Estudiante::agregarCursoNota(std::string curso, double nota) {
-    for(int i = 0; i < cursosNotas.size(); i++) {
-        if (cursosNotas[i].first == curso) {
-            std::cout << "El curso ya esta anotado con nombre: " << cursosNotas[i].first << ", y nota: " << cursosNotas[i].second << "." << std::endl;
+    for(const auto& pareja : cursosNotas) {
+        if (pareja.first == curso) {
+            std::cout << "El curso ya esta anotado con nombre: " << pareja.first << ", y nota: " << pareja.second << "." << std::endl;
             return; 
         }
     }
@@ -47,12 +32,21 @@ void Estudiante::agregarCursoNota(std::string curso, double nota) {
 
 // Metodo para eliminar un curso y su nota.
 void Estudiante::eliminarCursoNota(std::string curso){ 
-    for (int i = 0; i < cursosNotas.size(); i++) {
+    for (size_t i = 0; i < cursosNotas.size(); i++) {
         if(cursosNotas[i].first == curso) {
             cursosNotas.erase(cursosNotas.begin() + i); 
             return;
         } 
     }
+}
+
+// Sobrecarga del operador < para ordenar estudiantes por nombre.
+bool Estudiante::operator<(const Estudiante& otro) const {return nombre < otro.nombre;}
+
+// Sobrecarga del operador << para imprimir estudiantes.
+std::ostream& operator<<(std::ostream& os, const Estudiante& est) {
+    os << "Nombre: " << est.nombre << ", Legajo: " << est.legajo;
+    return os;
 }
 
 
@@ -65,7 +59,7 @@ Curso::Curso(std::string nombre) : nombre(std::move(nombre)) {}
 std::string Curso::getNombre(){return nombre;}
 
 // Metodo para inscribir un estudiante. -> Inciso b) -> i)
-void Curso::inscribirEstudiante(std::unique_ptr<Estudiante> estudiante){
+void Curso::inscribirEstudiante(std::shared_ptr<Estudiante> estudiante){
     if (completo()){ std::cout << "Cupos llenos." << std::endl; return;}
 
     if(buscarEstudiante(estudiante -> getLegajo())){ 
@@ -73,7 +67,7 @@ void Curso::inscribirEstudiante(std::unique_ptr<Estudiante> estudiante){
         return; 
     }
 
-    lista_estudiantes.push_back(std::move(estudiante));
+    lista_estudiantes.push_back(estudiante);
     return;
 }
 
@@ -85,7 +79,7 @@ void Curso::desinscribirEstudiante(int legajo){
         return;
     }
 
-    for(int i = 0; i < lista_estudiantes.size(); i++){ 
+    for(size_t i = 0; i < lista_estudiantes.size(); i++){ 
         if(lista_estudiantes[i] -> getLegajo() == legajo){ 
             lista_estudiantes.erase(lista_estudiantes.begin() + i); 
             return; 
@@ -96,7 +90,7 @@ void Curso::desinscribirEstudiante(int legajo){
 
 // Metodo para saber si un estudiante esta inscripto o no. -> Inciso b) -> ii)
 bool Curso::buscarEstudiante(int legajo){
-    for (int i = 0; i < lista_estudiantes.size(); i++) if(lista_estudiantes[i] -> getLegajo() == legajo) return true; 
+    for (const auto& estudiante : lista_estudiantes) if(estudiante -> getLegajo() == legajo) return true; 
     return false;
 }
 
@@ -107,4 +101,31 @@ bool Curso::completo(){
         return true;
     }
     return false;
+}
+
+// Método para ordenar la lista de estudiantes. -> Inciso b) -> iv)
+void Curso::ordenarEstudiantes() {
+    std::sort(lista_estudiantes.begin(), lista_estudiantes.end(), 
+        [](const std::shared_ptr<Estudiante>& a, const std::shared_ptr<Estudiante>& b) {
+            return *a < *b; // Usa el operador < sobrecargado
+        });
+}
+
+// Metodo para imprimir la lista de estudiantes. -> Inciso b) -> iv)
+void Curso::imprimirEstudiantes() {
+    ordenarEstudiantes(); // Primero ordenamos la lista
+
+    std::cout << "Lista de estudiantes en orden alfabetico:\n";
+    for (const auto& estudiante : lista_estudiantes) {
+        std::cout << *estudiante << std::endl; // Usa el operador << sobrecargado
+    }
+}
+
+// Constructor de copia (shallow copy)
+Curso::Curso(const Curso& otro) : nombre(otro.nombre), lista_estudiantes(otro.lista_estudiantes) {
+    /*
+    Esta es una copia superficial (shallow copy). Se copian los punteros shared_ptr, por lo que ambas instancias
+    de Curso compartirán los mismos objetos Estudiante. Esto es eficiente, pero cualquier modificación en un estudiante
+    afectará a ambas instancias.
+    */
 }

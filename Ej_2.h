@@ -1,11 +1,12 @@
-#ifndef Ej_2.H
-#define Ej_2.H
+#ifndef EJ_2_H  
+#define EJ_2_H  
 
 #include <iostream>
 #include <vector>
-#include <memory>  // Para unique_ptr
+#include <memory>  // Para shared_ptr
 #include <string>
 #include <utility> // Para std::pair 
+#include <algorithm>
 
 class Estudiante {
 private:
@@ -17,7 +18,7 @@ public:
     // Constructor
     Estudiante(std::string nombre, int leg);
 
-    //Destructor
+    // Destructor
     ~Estudiante() = default;
 
     // Métodos de acceso
@@ -29,33 +30,45 @@ public:
     void agregarCursoNota(std::string curso, double nota);
     void eliminarCursoNota(std::string curso);
 
+    // Sobrecarga del operador < para ordenar estudiantes por nombre.
+    bool operator<(const Estudiante& otro) const;
+
+    // Sobrecarga del operador << para imprimir estudiantes.
+    friend std::ostream& operator<<(std::ostream& os, const Estudiante& est);
 };
 
 class Curso {
 private:
     const std::string nombre;
-    const int capacidad_max = 20;
-    std::vector<std::unique_ptr<Estudiante>> lista_estudiantes;
+    static const int capacidad_max = 20;
+    std::vector<std::shared_ptr<Estudiante>> lista_estudiantes;
 
 public:
-
     // Constructor
     Curso(std::string nombre);
 
     // Destructor
     ~Curso() = default;
 
-    // Getters.
-    std::string getCurso();
+    // Getters
     std::string getNombre();
 
-    // Metodos
-    void inscribirEstudiante(std::unique_ptr<Estudiante> estudiante);
+    // Métodos
+    void inscribirEstudiante(std::shared_ptr<Estudiante> estudiante);
     void desinscribirEstudiante(int legajo);
     bool buscarEstudiante(int legajo);
     bool completo();
-    void imprimirEstudiantes();
-    void ordenarEstudiantes();
+
+    void ordenarEstudiantes();  
+    void imprimirEstudiantes(); 
+
+    // Constructor de copia (shallow copy)
+    Curso(const Curso& otro);
 };
+
+// Funciones para mostrar los menús.
+void mostrarMenuPrincipal();
+void mostrarMenuEstudiante();
+void mostrarMenuCurso();
 
 #endif
