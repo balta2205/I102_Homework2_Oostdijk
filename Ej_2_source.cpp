@@ -42,8 +42,8 @@ void Estudiante::eliminarCursoNota(std::string curso){
     
     for (size_t i = 0; i < cursosNotas.size(); i++) {
         if(cursosNotas[i].first == curso) {
-            cursosNotas.erase(cursosNotas.begin() + i); 
             std::cout << "El curso " << cursosNotas[i].first << " con nota " << cursosNotas[i].second << " ha sido eliminado." << std::endl;
+            cursosNotas.erase(cursosNotas.begin() + i); 
             return;
         } 
     }
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, const Estudiante& est) {
 Curso::Curso(std::string nombre) : nombre(std::move(nombre)) {}
 
 // Metodos Getters.
-std::string Curso::getNombre(){return nombre;}
+std::string Curso::getNombre() const {return nombre;}
 
 // Metodo para inscribir un estudiante. -> Inciso b) -> i)
 void Curso::inscribirEstudiante(std::shared_ptr<Estudiante> estudiante){
@@ -91,8 +91,8 @@ void Curso::desinscribirEstudiante(int legajo){
 
     for(size_t i = 0; i < lista_estudiantes.size(); i++){ 
         if(lista_estudiantes[i] -> getLegajo() == legajo){ 
-            lista_estudiantes.erase(lista_estudiantes.begin() + i); 
             std::cout << "El estudiante " << lista_estudiantes[i] -> getNombre() << " con legajo " << legajo << " ha sido desinscripto.\n";
+            lista_estudiantes.erase(lista_estudiantes.begin() + i); 
             return; 
         } 
     }

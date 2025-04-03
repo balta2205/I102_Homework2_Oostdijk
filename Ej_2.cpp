@@ -15,7 +15,7 @@ int main() {
         
         switch (opcionPrincipal) {
             case 1: {
-                int opcionEstudiante;
+                int opcionEstudiante = 0;
                 do {
                     mostrarMenuEstudiante();
                     std::cin >> opcionEstudiante;
@@ -88,7 +88,7 @@ int main() {
                 break;
             }
             case 2: {
-                int opcionCurso;
+                int opcionCurso = 0;
                 do {
                     mostrarMenuCurso();
                     std::cin >> opcionCurso;
@@ -139,6 +139,7 @@ int main() {
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         case 7:
+                            if (copiaShallow) delete copiaShallow;
                             copiaShallow = new Curso(curso);
                             std::cout << "Se ha creado una copia superficial del curso.\n";
                             std::cout << "--------------------------------------" << std::endl;
@@ -149,7 +150,12 @@ int main() {
                             curso.imprimirEstudiantes();
                             std::cout << std::endl;
                             std::cout << "Shallow Copy: \n";
-                            if (copiaShallow) copiaShallow->imprimirEstudiantes();
+                            if (copiaShallow) {
+                                std::cout << "Shallow Copy: \n";
+                                copiaShallow->imprimirEstudiantes();
+                            } else {
+                                std::cout << "No hay copia creada.\n";
+                            }
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         case 9:

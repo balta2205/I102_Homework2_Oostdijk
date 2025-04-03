@@ -51,7 +51,7 @@ public:
     ~Curso() = default;
 
     // Getters
-    std::string getNombre();
+    std::string getNombre() const;
 
     // Métodos
     void inscribirEstudiante(std::shared_ptr<Estudiante> estudiante);
