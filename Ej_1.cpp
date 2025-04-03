@@ -1,5 +1,4 @@
 #include "Ej_1.h"
-#include "Ej_1_source.cpp"
 
 int main(){
     int n, h, m, s;
@@ -76,9 +75,10 @@ int main(){
                     t1.setSegundo(s);
                 }while(s > 59 || s < 0);
                 
+                int o;
                 do{
                     std::cout << "Ingrese periodo: [1] a.m. [2] p.m." << std::endl;
-                    int o; std::cin >> o; 
+                    std::cin >> o; 
                     switch(o){
                         case 1:
                             t1.setPeriodo("a.m.");
@@ -90,7 +90,7 @@ int main(){
                             std::cout << "Opcion invalida" << std::endl;
                             break;
                     }
-                }while(n != 1 && n != 2);
+                }while(o != 1 && o != 2);
                 break;
             default: // Input fuera de rango aceptado.
                 std::cout << "Opcion invalida" << std::endl;

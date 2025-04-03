@@ -147,6 +147,7 @@ int main() {
                             std::cout << "Comparando copias:\n";
                             std::cout << "Original: \n";
                             curso.imprimirEstudiantes();
+                            std::cout << std::endl;
                             std::cout << "Shallow Copy: \n";
                             if (copiaShallow) copiaShallow->imprimirEstudiantes();
                             std::cout << "--------------------------------------" << std::endl;

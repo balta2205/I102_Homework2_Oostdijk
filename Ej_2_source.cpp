@@ -32,9 +32,18 @@ void Estudiante::agregarCursoNota(std::string curso, double nota) {
 
 // Metodo para eliminar un curso y su nota.
 void Estudiante::eliminarCursoNota(std::string curso){ 
+    if(cursosNotas.empty()) {
+        std::cout << "No hay cursos para eliminar." << std::endl;
+        return;
+    }
+
+    std::cout << "Los cursos para eliminar son: " << std::endl;
+    for (const auto& pareja : cursosNotas) std::cout << "Curso: " << pareja.first << ", Nota: " << pareja.second << std::endl;
+    
     for (size_t i = 0; i < cursosNotas.size(); i++) {
         if(cursosNotas[i].first == curso) {
             cursosNotas.erase(cursosNotas.begin() + i); 
+            std::cout << "El curso " << cursosNotas[i].first << " con nota " << cursosNotas[i].second << " ha sido eliminado." << std::endl;
             return;
         } 
     }
@@ -68,6 +77,7 @@ void Curso::inscribirEstudiante(std::shared_ptr<Estudiante> estudiante){
     }
 
     lista_estudiantes.push_back(estudiante);
+    std::cout << "El estudiante " << estudiante -> getNombre() << " con legajo " << estudiante -> getLegajo() << " ha sido inscripto." << std::endl;
     return;
 }
 
@@ -82,6 +92,7 @@ void Curso::desinscribirEstudiante(int legajo){
     for(size_t i = 0; i < lista_estudiantes.size(); i++){ 
         if(lista_estudiantes[i] -> getLegajo() == legajo){ 
             lista_estudiantes.erase(lista_estudiantes.begin() + i); 
+            std::cout << "El estudiante " << lista_estudiantes[i] -> getNombre() << " con legajo " << legajo << " ha sido desinscripto.\n";
             return; 
         } 
     }
