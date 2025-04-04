@@ -2,22 +2,22 @@
 
 int main() {
     std::vector<std::unique_ptr<Numero>> numeros;
-    
+
     numeros.push_back(std::make_unique<Entero>(5));
     numeros.push_back(std::make_unique<Entero>(-3));
     numeros.push_back(std::make_unique<Real>(4.7));
     numeros.push_back(std::make_unique<Real>(-2.1));
     numeros.push_back(std::make_unique<Complejo>(3, 4));
     numeros.push_back(std::make_unique<Complejo>(-1, 2));
-    
+
     for (size_t i = 0; i < numeros.size(); ++i) {
-        for (size_t j = 0; j < numeros.size(); ++j) {
-            if (i != j) {
+        for (size_t j = i + 1; j < numeros.size(); ++j) {
+            if (typeid(*numeros[i]) == typeid(*numeros[j])) {
                 probarOperaciones(*numeros[i], *numeros[j]);
             }
         }
     }
-    
+
     return 0;
 }
 
