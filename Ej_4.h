@@ -8,11 +8,11 @@ using namespace std;
 // Clase abstracta
 class Cuenta {
 protected:
-    string titularCuenta;
+    const string titularCuenta;
     double balance;
 
 public:
-    Cuenta(string titular, double saldoInicial);
+    Cuenta(const string titular, double saldoInicial);
     virtual ~Cuenta() {}
 
     void depositar(double cantidad);

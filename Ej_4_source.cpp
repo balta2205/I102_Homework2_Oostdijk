@@ -1,7 +1,7 @@
 #include "Ej_4.h"
 
 // ================= Cuenta =================
-Cuenta::Cuenta(string titular, double saldoInicial) : titularCuenta(titular), balance(saldoInicial) {}
+Cuenta::Cuenta(const string titular, double saldoInicial) : titularCuenta(titular), balance(saldoInicial) {}
 
 void Cuenta::depositar(double cantidad) {
     if (cantidad > 0) {
@@ -13,7 +13,7 @@ void Cuenta::depositar(double cantidad) {
 }
 
 // ================= CajaDeAhorro =================
-CajaDeAhorro::CajaDeAhorro(string titular, double saldoInicial) : Cuenta(titular, saldoInicial), vecesMostradoInfo(0) {}
+CajaDeAhorro::CajaDeAhorro(const string titular, double saldoInicial) : Cuenta(titular, saldoInicial), vecesMostradoInfo(0) {}
 
 void CajaDeAhorro::retirar(double cantidad) {
     if (cantidad <= balance) {
@@ -36,7 +36,7 @@ void CajaDeAhorro::mostrarInfo() {
 }
 
 // ================= CuentaCorriente =================
-CuentaCorriente::CuentaCorriente(string titular, double saldoInicial) : Cuenta(titular, saldoInicial) {}
+CuentaCorriente::CuentaCorriente(const string titular, double saldoInicial) : Cuenta(titular, saldoInicial) {}
 
 void CuentaCorriente::retirar(double cantidad) {
     if (cantidad <= balance) {
