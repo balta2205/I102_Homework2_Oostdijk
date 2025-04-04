@@ -5,6 +5,8 @@
 #include <vector>
 #include <memory>
 #include <sstream>
+#include <iomanip>
+#include <typeinfo>
 
 class Numero {
 public:
@@ -53,4 +55,4 @@ public:
 
 void probarOperaciones(const Numero& a, const Numero& b);
 
-#endif // NUMERO_H
+#endif
