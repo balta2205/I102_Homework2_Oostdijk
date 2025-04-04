@@ -2,103 +2,89 @@
 
 int main(){
     int n, h, m, s;
-    Tiempo t1;
+
+    std::unique_ptr<Tiempo> t1;
 
     std::cout << "Ejercicio 1" << std::endl;
     std::cout << "[1] Ingresar tiempo solo con horas" << std::endl;
     std::cout << "[2] Ingresar tiempo con horas y minutos" << std::endl; 
     std::cout << "[3] Ingresar tiempo con horas, minutos y segundos" << std::endl;
-    std::cout << "[4] Ingresar tiempo con horas, minutos, segundos y periodo" << std::endl;\
+    std::cout << "[4] Ingresar tiempo con horas, minutos, segundos y periodo" << std::endl;
 
     do{ //Repetir hasta que el usuario ingrese un valor correcto.
         std::cout << "Que desea hacer? [1] [2] [3] [4]" << std::endl;     
         std::cin >> n;
         switch(n){
-            case 1: // Solo horas.
+            case 1:{ // Solo horas.
                 do{
                     std::cout << "Ingrese horas (entre 1 y 12): ";
                     std::cin >> h;
-                    t1.setHora(h);
                 }while(h > 12 || h < 1);
+                t1 = std::make_unique<Tiempo>(h);
                 break; 
-                
-            case 2: // Solo horas y minutos.
+            }
+            case 2:{ // Solo horas y minutos.
                 do{
                     std::cout << "Ingrese horas (entre 1 y 12): ";
                     std::cin >> h;
-                    t1.setHora(h);
-                }while(h > 12 || h < 1);
-
-                do{
+                    
                     std::cout << "Ingrese minutos (entre 0 y 59): ";
                     std::cin >> m;
-                    t1.setMinuto(m);
-                }while(m > 59 || m < 0);
+                }while((h > 12 || h < 1) || (m > 59 || m < 0));
+                t1 = std::make_unique<Tiempo>(h, m);
                 break;
-            
-            case 3: // Solo horas, minutos y segundos.
+            }
+            case 3:{ // Solo horas, minutos y segundos.
                 do{
                     std::cout << "Ingrese horas (entre 1 y 12): ";
                     std::cin >> h;
-                    t1.setHora(h);
-                }while(h > 12 || h < 1);
-
-                do{
+                    
                     std::cout << "Ingrese minutos (entre 0 y 59): ";
                     std::cin >> m;
-                    t1.setMinuto(m);
-                }while(m > 59 || m < 0);
 
-                do{
                     std::cout << "Ingrese segundos (entre 0 y 59): ";
                     std::cin >> s;
-                    t1.setSegundo(s);
-                }while(s > 59 || s < 0);
+                }while((h > 12 || h < 1) || (m > 59 || m < 0) || (s > 59 || s < 0));
+                t1 = std::make_unique<Tiempo>(h, m, s);
                 break;
-
-            case 4: // Solo horas, minutos, segundos y periodo.
-                do{
-                    std::cout << "Ingrese horas (entre 1 y 12): ";
-                    std::cin >> h;
-                    t1.setHora(h);
-                }while(h > 12 || h < 1);
-
-                do{
-                    std::cout << "Ingrese minutos (entre 0 y 59): ";
-                    std::cin >> m;
-                    t1.setMinuto(m);
-                }while(m > 59 || m < 0);
-
-                do{
-                    std::cout << "Ingrese segundos (entre 0 y 59): ";
-                    std::cin >> s;
-                    t1.setSegundo(s);
-                }while(s > 59 || s < 0);
-                
+            }
+            case 4:{ // Solo horas, minutos, segundos y periodo.
                 int o;
                 do{
+                    std::cout << "Ingrese horas (entre 1 y 12): ";
+                    std::cin >> h;
+                    
+                    std::cout << "Ingrese minutos (entre 0 y 59): ";
+                    std::cin >> m;
+                    
+                    std::cout << "Ingrese segundos (entre 0 y 59): ";
+                    std::cin >> s;
+                    
                     std::cout << "Ingrese periodo: [1] a.m. [2] p.m." << std::endl;
-                    std::cin >> o; 
-                    switch(o){
-                        case 1:
-                            t1.setPeriodo("a.m.");
-                            break;
-                        case 2:
-                            t1.setPeriodo("p.m.");
-                            break;
-                        default:
-                            std::cout << "Opcion invalida" << std::endl;
-                            break;
+                    std::cin >> o;
+                    
+                    if(o != 1 && o != 2){
+                        std::cout << "Opcion invalida" << std::endl;
                     }
-                }while(o != 1 && o != 2);
+
+                }while((h > 12 || h < 1) || (m > 59 || m < 0) || (s > 59 || s < 0) || (o != 1 && o != 2));
+
+                if (o == 1) t1 = std::make_unique<Tiempo>(h, m, s, "a.m.");
+                else if (o == 2) t1 = std::make_unique<Tiempo>(h, m, s, "p.m.");
                 break;
-            default: // Input fuera de rango aceptado.
+            }
+            default:{// Input fuera de rango aceptado.
                 std::cout << "Opcion invalida" << std::endl;
                 break;
+            }
         }
     }while(n < 1 || n > 4);
 
-    interfazAcciones(t1); // Una vez ingresada la hora, se llama a la funcion para mostrar el menu de acciones.
+    if (t1) {
+        interfazAcciones(*t1); // Una vez ingresada la hora, se llama a la funcion para mostrar el menu de acciones.
+    } else {
+        std::cerr << "Error: no se pudo crear el objeto Tiempo" << std::endl;
+    }
 }
 
 void interfazAcciones(Tiempo &t1){
@@ -161,20 +147,29 @@ void modificarTiempo(Tiempo &t1){
                         case 1: // Modificar hora.
                             std::cout << "Ingrese nueva hora: ";
                             std::cin >> h;
+                            if (h > 12 || h < 1) {
+                                std::cout << "Hora invalida" << std::endl;   
+                                return;
+                            }
                             t1.setHora(h);
-                            if (h > 12 || h < 1) return;
                             break;
                         case 2: // Modificar minuto. 
                             std::cout << "Ingrese nuevo minuto: ";
                             std::cin >> m;
+                            if (m > 59 || m < 0) {
+                                std::cout << "Minuto invalido" << std::endl;
+                                return;
+                            }
                             t1.setMinuto(m);
-                            if (m > 59 || m < 0) return;
                             break;
                         case 3: // Modificar segundo.
                             std::cout << "Ingrese nuevo segundo: ";
                             std::cin >> s;
+                            if (s > 59 || s < 0) {
+                                std::cout << "Segundo invalido" << std::endl;
+                                return;
+                            }
                             t1.setSegundo(s);
-                            if (s > 59 || s < 0) return;
                             break;
                         case 4: // Modificar periodo.
                             std::cout << "Ingrese nuevo periodo: [1] a.m. [2] p.m." << std::endl;
