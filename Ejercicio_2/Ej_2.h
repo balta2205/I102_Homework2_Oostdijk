@@ -25,6 +25,7 @@ public:
     std::string getNombre() const;
     int getLegajo() const;
     double getPromedio() const;
+    std::vector<std::pair<std::string, double>> getCursosNotas() const;
 
     // Método para agregar un curso y su nota
     void agregarCursoNota(std::string curso, double nota);

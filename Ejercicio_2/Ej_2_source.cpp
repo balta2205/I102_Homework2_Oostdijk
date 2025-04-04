@@ -18,6 +18,8 @@ double Estudiante::getPromedio() const { // Devuelve el promedio de las notas
     return promedio / cursosNotas.size();
 }
 
+std::vector<std::pair<std::string, double>> Estudiante::getCursosNotas() const {return cursosNotas;} // Devuelve los cursos y notas.
+
 // Metodo para agregar un curso y su nota.
 void Estudiante::agregarCursoNota(std::string curso, double nota) {
     for(const auto& pareja : cursosNotas) {
@@ -37,9 +39,6 @@ void Estudiante::eliminarCursoNota(std::string curso){
         return;
     }
 
-    std::cout << "Los cursos para eliminar son: " << std::endl;
-    for (const auto& pareja : cursosNotas) std::cout << "Curso: " << pareja.first << ", Nota: " << pareja.second << std::endl;
-    
     for (size_t i = 0; i < cursosNotas.size(); i++) {
         if(cursosNotas[i].first == curso) {
             std::cout << "El curso " << cursosNotas[i].first << " con nota " << cursosNotas[i].second << " ha sido eliminado." << std::endl;

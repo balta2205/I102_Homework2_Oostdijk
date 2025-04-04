@@ -5,6 +5,7 @@ int main() {
     Curso* copiaShallow = nullptr;
     Curso copiaDeep("Temp");
     std::shared_ptr<Estudiante> estudiante = nullptr;
+    std::vector<std::shared_ptr<Estudiante>> lista_estudiantes;
     
     int opcionPrincipal;
     do {
@@ -30,20 +31,40 @@ int main() {
                             std::cout << "Legajo: ";
                             std::cin >> legajo;
                             estudiante = std::make_shared<Estudiante>(nombre, legajo);
+                            lista_estudiantes.push_back(estudiante);
+                            std::cout << "Estudiante creado: " << *estudiante << "\n";
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
                         case 2: {
-                            if (estudiante) {
-                                std::cout << *estudiante << "\n";
+                            if (lista_estudiantes.size() > 0) {
+                                for(const auto& est : lista_estudiantes) {
+                                    std::cout << *est << "\n";
+                                }
                             } else {
-                                std::cout << "No hay estudiante creado.\n";
+                                std::cout << "Debe crear un estudiante primero.\n";
                             }
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
                         case 3: {
-                            if (estudiante) {
+                            if (lista_estudiantes.size() > 0) {
+
+                                std::cout << "A que estudiante desea agregar un curso y nota?\n";
+                                int h = 1;
+                                for (const auto& est : lista_estudiantes) {
+                                    std::cout << "[" << h << "] " << *est << "\n";
+                                    h++;
+                                }
+                                std::cout << "Seleccione el número del estudiante: ";
+                                int num_estudiante;
+                                std::cin >> num_estudiante;
+                                if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
+                                    std::cout << "Número de estudiante no válido.\n";
+                                    break;
+                                }
+                                estudiante = lista_estudiantes[num_estudiante - 1];
+                                std::cout << "Estudiante seleccionado: " << *estudiante << "\n" << std::endl;
                                 std::string curso;
                                 double nota;
                                 std::cout << "Ingrese el curso: ";
@@ -58,9 +79,34 @@ int main() {
                             break;
                         }
                         case 4: {
-                            if (estudiante) {
+                            if (lista_estudiantes.size() > 0) {
+
+                                std::cout << "A que estudiante desea eliminar un curso y su nota?\n";
+                                int h = 1;
+                                for (const auto& est : lista_estudiantes) {
+                                    std::cout << "[" << h << "] " << *est << "\n";
+                                    h++;
+                                }
+                                std::cout << "\nSeleccione el número del estudiante: ";
+                                int num_estudiante;
+                                std::cin >> num_estudiante;
+                                if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
+                                    std::cout << "Número de estudiante no válido.\n";
+                                    break;
+                                }
+                                if (lista_estudiantes[num_estudiante - 1]->getCursosNotas().empty()) {
+                                    std::cout << "El estudiante no tiene cursos para eliminar.\n";
+                                    std::cout << "\n--------------------------------------";
+                                    break;
+                                }
+                                estudiante = lista_estudiantes[num_estudiante - 1];
+                                std::cout << "Estudiante seleccionado: " << *estudiante << "\n" << std::endl;
+                                std::cout << "Los cursos y notas son: ";
+                                for(const auto& cursoNota : estudiante->getCursosNotas()) {
+                                    std::cout << cursoNota.first << " - "; 
+                                }
                                 std::string curso;
-                                std::cout << "Ingrese el curso de la nota a eliminar: ";
+                                std::cout << "\nIngrese el curso a eliminar: ";
                                 std::cin >> curso;
                                 estudiante->eliminarCursoNota(curso);
                             } else {
@@ -70,7 +116,23 @@ int main() {
                             break;
                         }
                         case 5: {
-                            if (estudiante) {
+                            if (lista_estudiantes.size() > 0) {
+
+                                std::cout << "A que estudiante desea agregar calcularle el promedio?\n";
+                                int h = 1;
+                                for (const auto& est : lista_estudiantes) {
+                                    std::cout << "[" << h << "] " << *est << "\n";
+                                    h++;
+                                }
+                                std::cout << "Seleccione el número del estudiante: ";
+                                int num_estudiante;
+                                std::cin >> num_estudiante;
+                                if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
+                                    std::cout << "Número de estudiante no válido.\n";
+                                    break;
+                                }
+                                estudiante = lista_estudiantes[num_estudiante - 1];
+                                std::cout << "\nEstudiante seleccionado: " << *estudiante << "\n";
                                 std::cout << "Promedio: " << estudiante->getPromedio() << "\n";
                             } else {
                                 std::cout << "Debe crear un estudiante primero.\n";
@@ -78,11 +140,13 @@ int main() {
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
-                        case 6:
+                        case 6: {
                             break;
-                        default:
+                        }
+                        default:{
                             std::cout << "Opción no válida.\n";
                             std::cout << "--------------------------------------" << std::endl;
+                        }
                     }
                 } while (opcionEstudiante != 6);
                 break;
@@ -95,26 +159,48 @@ int main() {
                     std::cout << std::endl;
                     std::cout << "--------------------------------------" << std::endl;
                     switch (opcionCurso) {
-                        case 1:
+                        case 1:{
                             std::cout << "Curso creado: Matemáticas\n";
                             break;
+                        }
                         case 2: {
                             std::string nombre;
-                            int legajo;
-                            std::cout << "Nombre del estudiante: ";
-                            std::cin >> nombre;
-                            std::cout << "Legajo: ";
-                            std::cin >> legajo;
-                            estudiante = std::make_shared<Estudiante>(nombre, legajo);
+                            int h = 0, num_estudiante;
+
+                            for(const auto& est : lista_estudiantes) {
+                                std::cout << "[" << h << "] " << *est << "\n";
+                                h++;
+                            }
+                            std::cout << "Seleccione el número del estudiante a inscribir: ";
+                            std::cin >> num_estudiante;
+                            if (num_estudiante < 0 || num_estudiante >= lista_estudiantes.size()) {
+                                std::cout << "Número de estudiante no válido.\n";
+                                break;
+                            }
+                            estudiante = lista_estudiantes[num_estudiante];
+                            std::cout << "Estudiante seleccionado: " << *estudiante << "\n" << std::endl;
                             curso.inscribirEstudiante(estudiante);
+                            std::cout << "El estudiante " << estudiante->getNombre() << " con legajo " << estudiante->getLegajo() << " ha sido inscripto en el curso.\n";
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
                         case 3: {
-                            int legajo;
-                            std::cout << "Legajo del estudiante a desinscribir: ";
-                            std::cin >> legajo;
-                            curso.desinscribirEstudiante(legajo);
+                            int legajo, h = 0, num_estudiante;
+
+                            for(const auto& est : lista_estudiantes) {
+                                std::cout << "[" << h << "] " << *est << "\n";
+                                h++;
+                            }
+                            std::cout << "Seleccione el número del estudiante a inscribir: ";
+                            std::cin >> num_estudiante;
+                            if (num_estudiante < 0 || num_estudiante >= lista_estudiantes.size()) {
+                                std::cout << "Número de estudiante no válido.\n";
+                                break;
+                            }
+                            estudiante = lista_estudiantes[num_estudiante];
+                            std::cout << "Estudiante seleccionado: " << *estudiante << "\n" << std::endl;
+                            curso.desinscribirEstudiante(estudiante->getLegajo());
+                            std::cout << "El estudiante " << estudiante->getNombre() << " con legajo " << estudiante->getLegajo() << " ha sido desinscripto del curso.\n";
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
@@ -130,21 +216,24 @@ int main() {
                             std::cout << "--------------------------------------" << std::endl;
                             break;
                         }
-                        case 5:
+                        case 5:{
                             std::cout << (curso.completo() ? "El curso está completo.\n" : "Aún hay vacantes.\n");
                             std::cout << "--------------------------------------" << std::endl;
                             break;
-                        case 6:
+                        }
+                        case 6:{
                             curso.imprimirEstudiantes();
                             std::cout << "--------------------------------------" << std::endl;
                             break;
-                        case 7:
+                        }
+                        case 7:{
                             if (copiaShallow) delete copiaShallow;
                             copiaShallow = new Curso(curso);
                             std::cout << "Se ha creado una copia superficial del curso.\n";
                             std::cout << "--------------------------------------" << std::endl;
                             break;
-                        case 8:
+                        }
+                        case 8:{
                             std::cout << "Comparando copias:\n";
                             std::cout << "Original: \n";
                             curso.imprimirEstudiantes();
@@ -158,22 +247,27 @@ int main() {
                             }
                             std::cout << "--------------------------------------" << std::endl;
                             break;
-                        case 9:
+                        }
+                        case 9:{
                             break;
-                        default:
+                        }
+                        default:{
                             std::cout << "Opción no válida.\n";
                             std::cout << "--------------------------------------" << std::endl;
+                        }
                     }
                 } while (opcionCurso != 9);
                 break;
             }
-            case 3:
+            case 3:{
                 std::cout << "Saliendo...\n";
                 std::cout << "--------------------------------------" << std::endl;
                 break;
-            default:
+            }
+            default:{
                 std::cout << "Opción no válida.\n";
                 std::cout << "--------------------------------------" << std::endl;
+            }
         }
     } while (opcionPrincipal != 3);
 
