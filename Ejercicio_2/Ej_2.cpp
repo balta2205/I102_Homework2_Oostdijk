@@ -57,7 +57,7 @@ int main() {
                                     h++;
                                 }
                                 std::cout << "Seleccione el número del estudiante: ";
-                                int num_estudiante;
+                                size_t num_estudiante;
                                 std::cin >> num_estudiante;
                                 if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
                                     std::cout << "Número de estudiante no válido.\n";
@@ -88,7 +88,7 @@ int main() {
                                     h++;
                                 }
                                 std::cout << "\nSeleccione el número del estudiante: ";
-                                int num_estudiante;
+                                size_t num_estudiante;
                                 std::cin >> num_estudiante;
                                 if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
                                     std::cout << "Número de estudiante no válido.\n";
@@ -125,7 +125,7 @@ int main() {
                                     h++;
                                 }
                                 std::cout << "Seleccione el número del estudiante: ";
-                                int num_estudiante;
+                                size_t num_estudiante;
                                 std::cin >> num_estudiante;
                                 if (num_estudiante < 1 || num_estudiante > lista_estudiantes.size()) {
                                     std::cout << "Número de estudiante no válido.\n";
@@ -165,7 +165,8 @@ int main() {
                         }
                         case 2: {
                             std::string nombre;
-                            int h = 0, num_estudiante;
+                            int h = 0;
+                            size_t num_estudiante;
 
                             for(const auto& est : lista_estudiantes) {
                                 std::cout << "[" << h << "] " << *est << "\n";
@@ -173,7 +174,7 @@ int main() {
                             }
                             std::cout << "Seleccione el número del estudiante a inscribir: ";
                             std::cin >> num_estudiante;
-                            if (num_estudiante < 0 || num_estudiante >= lista_estudiantes.size()) {
+                            if (num_estudiante < 1 || num_estudiante >= lista_estudiantes.size()) {
                                 std::cout << "Número de estudiante no válido.\n";
                                 break;
                             }
@@ -185,7 +186,8 @@ int main() {
                             break;
                         }
                         case 3: {
-                            int legajo, h = 0, num_estudiante;
+                            int  h = 0;
+                            size_t num_estudiante;
 
                             for(const auto& est : lista_estudiantes) {
                                 std::cout << "[" << h << "] " << *est << "\n";
@@ -193,7 +195,7 @@ int main() {
                             }
                             std::cout << "Seleccione el número del estudiante a inscribir: ";
                             std::cin >> num_estudiante;
-                            if (num_estudiante < 0 || num_estudiante >= lista_estudiantes.size()) {
+                            if (num_estudiante < 1 || num_estudiante >= lista_estudiantes.size()) {
                                 std::cout << "Número de estudiante no válido.\n";
                                 break;
                             }

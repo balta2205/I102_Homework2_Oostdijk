@@ -224,7 +224,7 @@ void cambioDeFormato(Tiempo &t1){
                 std::cout << "La hora es: " << t1.getHora() << "hs, " << t1.getMinuto() << "m, " << t1.getSegundo() << "s" << std::endl;
             }
         }
-        else{ // Input fuera de rango aceptado.
+        else{ // Input fuera de rango.
             std::cout << "Opcion invalida" << std::endl;
         }
     }while(l != 1 && l != 2);
