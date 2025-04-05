@@ -184,7 +184,7 @@ void modificarTiempo(Tiempo &t1){
                                         break;
                                     default: // Opcion invalida.
                                         std::cout << "Opcion invalida" << std::endl;
-                                        break;
+                                        return;
                                 }
                             }while(j != 1 && j != 2);
                     }
