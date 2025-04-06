@@ -1,0 +1,19 @@
+Link al repositorio del Homework_2 (Baltasar Oostdijk)
+
+https://github.com/balta2205/I102_Homework2_Oostdijk.git
+
+Ejercicio_1: Implementación de la clase Tiempo.
+Compilador: g++ -std=c++17 -Wall -Wextra -o Ejercicio_1/Ej_1 Ejercicio_1/Ej_1.cpp Ejercicio_1/Ej_1_source.cpp
+Ejecutable: ./Ejercicio_1/Ej_1
+
+Ejercicio_2: Implementaciones de las clases Curso y Estudiante.
+Compilador: g++ -std=c++17 -Wall -Wextra -o Ejercicio_2/Ej_2 Ejercicio_2/Ej_2.cpp Ejercicio_2/Ej_2_source.cpp
+Ejecutable: ./Ejercicio_2/Ej_2
+
+Ejercicio_3: Implementación de la clase abstracta Numeros y subclases Entero, Real y Complejo.
+Compilador: g++ -std=c++17 -Wall -Wextra -o Ejercicio_3/Ej_3 Ejercicio_3/Ej_3.cpp Ejercicio_3/Ej_3_source.cpp
+Ejecutable: ./Ejercicio_3/Ej_3
+
+Ejercicio_4: Implementación de la clase abstracta Cuenta y subclases CajaDeAhorro y CuentaCorriente.
+Compilador: g++ -std=c++17 -Wall -Wextra -o Ejercicio_4/Ej_4 Ejercicio_4/Ej_4.cpp Ejercicio_4/Ej_4_source.cpp
+Ejecutable: ./Ejercicio_4/Ej_4
